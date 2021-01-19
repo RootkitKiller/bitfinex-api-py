@@ -44,6 +44,16 @@ async def log_derivative_status():
   print (status)
 
 async def run():
+  # import aiohttp
+  # my_proxy = 'http://127.0.0.1:1087'
+  # url = "https://api.bitfinex.com/v2/tickers?symbols=tBTCUSD,tLTCUSD,fUSD"
+  # async with aiohttp.ClientSession() as session:
+  #   async with session.get(url, proxy = my_proxy) as resp:
+  #     text = await resp.text()
+  #     print(text)
+  #     if resp.status < 200 or resp.status > 299:
+  #       raise Exception('POST {} failed with status {} - {}'
+  #                       .format(url, resp.status, text))
   await log_historical_candles()
   await log_historical_trades()
   await log_books()

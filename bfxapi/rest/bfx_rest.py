@@ -27,6 +27,7 @@ class BfxRest:
         self.API_KEY = API_KEY
         self.API_SECRET = API_SECRET
         self.host = host
+        self.proxy = "http://127.0.0.1:1087"
         # this value can also be set to bfxapi.decimal for much higher precision
         self.parse_float = parse_float
         self.logger = CustomLogger('BfxRest', logLevel=logLevel)
@@ -39,7 +40,7 @@ class BfxRest:
         """
         url = '{}/{}{}'.format(self.host, endpoint, params)
         async with aiohttp.ClientSession() as session:
-            async with session.get(url) as resp:
+            async with session.get(url, proxy = self.proxy) as resp:
                 text = await resp.text()
                 if resp.status != 200:
                     raise Exception('GET {} failed with status {} - {}'
@@ -59,7 +60,7 @@ class BfxRest:
             self.API_KEY, self.API_SECRET, endpoint, sData)
         headers["content-type"] = "application/json"
         async with aiohttp.ClientSession() as session:
-            async with session.post(url + params, headers=headers, data=sData) as resp:
+            async with session.post(url + params, headers=headers, data=sData, proxy = self.proxy) as resp:
                 text = await resp.text()
                 if resp.status < 200 or resp.status > 299:
                     raise Exception('POST {} failed with status {} - {}'
